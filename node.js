@@ -10,11 +10,13 @@ class LinkedList {
         this.head = null //head indicates the beginning of a list, null because we start with an empty list
     }
 
+    /**************************************** InsertFirst ***************************************/
     //inserting at the beginning of the list O(1)
     insertFirst(item){
         this.head = new _Node(item, this.head)
     }
 
+    /**************************************** Insert Last ****************************************/
     //inserting at the end of the list O(n)
     insertLast(item){
         if(this.head == null){ //check to see if th elist is empty and if it is insert item as the only item
@@ -29,6 +31,51 @@ class LinkedList {
         }
     }
 
+    insertBefore(item, key){
+        if(!this.head) {
+            return null
+        }
+
+        let currNode = this.head
+        let previousNode = this.head
+        while((currNode !== null) && (currNode.value !== key)){
+            previousNode = currNode
+            currNode = currNode.next
+        }
+        if(currNode == null){
+            console.log('key does not exist')
+            return
+        }
+        return this.insertAfter(item, previousNode.value)
+    }
+
+    insertAfter(item, key){
+        if(!this.head) {
+            return null
+        }
+        
+        let currNode = this.head
+        while((currNode !== null) && (currNode.value !== key)){
+            currNode = currNode.next
+        }
+        if (currNode == null){
+            console.log('key does not exist')
+            return
+        }
+        return currNode.next = new _Node(item, currNode.next)
+    }
+
+    insertAt(item, position){
+        let currNode =  this.head
+        let i = 0
+        while((currNode !== null) && (i < position -1 )){
+            currNode = currNode.next
+            i++
+        }
+        return this.insertAfter(item, currNode.value)
+    }
+
+    /******************************************* Find **********************************************/
     //retrieval of an item from a list O(n)
     find(item){
         let currNode = this.head //start at the beginning of the list
@@ -46,6 +93,7 @@ class LinkedList {
         return currNode //return when the value is equal to the item
     }
 
+    /********************************************* Remove ************************************/
     //remove an item O(n)
     remove(item){
         if (!this.head){ // if the list is empty
@@ -68,8 +116,33 @@ class LinkedList {
         }
         previousNode.next = currNode.next //set the node containing the value to null 
         /*How it works: the previous node contains the value that last was not equal to the item, so when the while loop exists the next value after the previous node is the desired item, wo set it to null to remove the value */
+    }
 
-
-
+    print() {
+        let currNode = this.head
+        while( currNode !== null){
+            console.log(currNode.value + ' ')
+            currNode = currNode.next
+        }
     }
 }
+
+function main(){
+    let SLL = new LinkedList()
+
+    SLL.insertFirst('Apollo')
+    SLL.insertLast('Boomer')
+    SLL.insertLast('Helo')
+    SLL.insertLast('Husker')
+    SLL.insertLast('Starbuck')
+    SLL.insertLast('Tauhida')
+    SLL.remove('squirral')
+    SLL.insertBefore('Athena', 'Boomer')
+    SLL.insertAfter('Hotdog', 'Helo')
+    SLL.insertAt('Kat', 3)
+    SLL.remove('Tauhida')
+
+    return SLL.print()
+}
+
+main()
