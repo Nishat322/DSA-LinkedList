@@ -117,14 +117,6 @@ class LinkedList {
         previousNode.next = currNode.next //set the node containing the value to null 
         /*How it works: the previous node contains the value that last was not equal to the item, so when the while loop exists the next value after the previous node is the desired item, wo set it to null to remove the value */
     }
-
-    print() {
-        let currNode = this.head
-        while( currNode !== null){
-            console.log(currNode.value + ' ')
-            currNode = currNode.next
-        }
-    }
 }
 
 function main(){
@@ -142,7 +134,69 @@ function main(){
     SLL.insertAt('Kat', 3)
     SLL.remove('Tauhida')
 
-    return SLL.print()
+    display(SLL)
+    size(SLL)
+    isEmpty(SLL)
+    findPrevious(SLL, 'Starbuck')
+    findLast(SLL)
+    return SLL
 }
 
 main()
+
+function display(list){
+    let currNode = list.head
+    while( currNode !== null){
+        console.log(currNode.value + ' ')
+        currNode = currNode.next
+    }
+    
+}
+
+function size(list){
+    let currNode = list.head
+    let size = 0
+    while (currNode !== null){
+        size = size + 1
+        currNode = currNode.next
+    }
+    console.log(size)
+    return size
+}
+
+function isEmpty(list){
+    if(list.head == null){
+        console.log ('List is empty')
+    }
+    else{
+        console.log('List is not empty')
+    }
+}
+
+function findPrevious(list, item){
+    let currNode = list.head
+    let previousNode = list.head
+
+    while((currNode !== null) && (currNode.value !== item)){
+        previousNode = currNode
+        currNode = currNode.next
+    }
+    if(currNode == null){
+        console.log('item does not exist')
+    }
+    console.log(previousNode)
+    return previousNode
+}
+
+function findLast(list){
+    let currNode = list.head
+    if(currNode == null){
+        console.log('list does not exist')
+    }
+    while (currNode.next !== null){
+        currNode = currNode.next
+    }
+
+    console.log(currNode)
+    return currNode
+}
