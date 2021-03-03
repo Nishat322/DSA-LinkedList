@@ -199,4 +199,4 @@ function findLast(list){
 
     console.log(currNode)
     return currNode
-}
+} 
